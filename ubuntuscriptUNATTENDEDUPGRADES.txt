@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sudo chmod ugo+wrx /etc/apt/apt.conf.d/50unattended-upgrades
+echo Changed Permissions in /etc/apt/apt.conf.d/50unattended-upgrades >> ~/ScriptLogs
+
+sudo sed -i /{distro_codename}-updates/d /etc/apt/apt.conf.d/50unattended-upgrades
+echo Deleted updates line in /etc/apt/apt.conf.d/50unattended-upgrades >> ~/ScriptLogs
+
+sudo sed -i '14\"${distro_id}:${distro_codename}-updates\";' /etc/apt/apt.conf.d/50unattended-upgrades
+echo Added updates line in /etc/apt/conf.d/50unattended-upgrades >> ~/ScriptLogs

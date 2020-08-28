@@ -1,0 +1,14 @@
+#!/bin/bash
+
+read -p "Is MYSQL a critical service?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Configuring MySQL... >> ~/ScriptLogs
+	sudo apt-get install mysql-server
+
+	sudo mysql-secure-installation
+
+	sudo ufw allow mysql
+
+	#Everything else
+fi

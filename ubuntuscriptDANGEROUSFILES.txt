@@ -1,0 +1,71 @@
+#!/bin/bash
+
+sudo find / -type f -name "*.mp3" | grep mp3 > ~/mymp3files | grep mp3 >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mymp3files
+#sudo chmod ugo+wrx ~/mymp3files
+#~/mymp3files
+
+sudo find / -type f -name "*.ogg" | grep mp3 > ~/myoggfiles | grep ogg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myoggfiles
+#sudo chmod ugo+wrx ~/myoggfiles
+#~/myoggfiles
+
+sudo find / -type f -name "*.mp4" | grep mp4 > ~/mymp4files | grep mp4 >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mymp4files
+#sudo chmod ugo+wrx ~/mymp4files
+#~/mymp4files
+
+sudo find / -type f -name "*.mov" | grep mov > ~/mymovfiles | grep mov >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mymovfiles
+#sudo chmod ugo+wrx ~/mymovfiles
+#~/mymovfiles
+
+sudo find / -type f -name "*.avi" | grep avi > ~/myavifiles | grep avi >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myavifiles
+#sudo chmod ugo+wrx ~/myavifiles
+#~/myavifiles
+
+sudo find / -type f -name "*.mpg" | grep mpg > ~/mympgfiles | grep mpg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mympgfiles
+#sudo chmod ugo+wrx ~/mympgfiles
+#~/mympgfiles
+
+sudo find / -type f -name "*.mpeg" | grep mpeg > ~/mympegfiles | grep mpeg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mympegfiles
+#sudo chmod ugo+wrx ~/mympegfiles
+#~/mympegfiles
+
+sudo find / -type f -name "*.flac" | grep flac > ~/myflacfiles | grep flac >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myflacfiles
+#sudo chmod ugo+wrx ~/myflacfiles
+#~/myflacfiles
+
+sudo find / -type f -name "*.m4a" | grep m4a > ~/mym4afiles | grep m4a >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mym4afiles
+#sudo chmod ugo+wrx ~/mym4afiles
+#~/mym4afiles
+
+sudo find / -type f -name "*.flv" | grep flv > ~/myflvfiles | grep flv >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myflvfiles
+#sudo chmod ugo+wrx ~/myflvfiles
+#~/myflvfiles
+
+sudo find / -type f -name "*.gif" | grep gif > ~/mygiffiles | grep gif >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mygiffiles
+#sudo chmod ugo+wrx ~/mygiffiles
+#~/mygiffiles
+
+sudo find / -type f -name "*.png" | grep png > ~/mypngfiles | grep png >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mypngfiles
+#sudo chmod ugo+wrx ~/mypngfiles
+#~/mypngfiles
+
+sudo find / -type f -name "*.jpg" | grep jpg > ~/myjpgfiles | grep jpg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myjpgfiles
+#sudo chmod ugo+wrx ~/myjpgfiles
+#~/myjpgfiles
+
+sudo find / -type f -name "*.jpeg" | grep jpeg > ~/myjpegfiles | grep jpeg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myjpegfiles
+#sudo chmod ugo+wrx ~/myjpegfiles
+#~/myjpegfiles

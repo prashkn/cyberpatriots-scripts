@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo Configuring PAM... >> ~/ScriptLogs
+sudo sed -i s/'auth required pam_listfile.so'/'auth required pam_listfile.so onerr=succeed item=user sense=deny file=/etc/ssh/deniedusers'/g /etc/pam.d/sshd
+
+sudo chmod 600 /etc/ssh/deniedusers
+
+#everything else
+
+sudo sed -i s/\/bing\/bash/\/sbin\/nologin/g /etc/passwd
+sudo chmod -R 444 /var/log
+sudo chmod 440 /etc/passwd
+sudo chmod 440 /etc/shadow
+sudo chmod 440 /etc/group
+sudo chmod 04750 /bin/su
+sudo chmod 444 /var/www

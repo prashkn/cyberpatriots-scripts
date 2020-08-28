@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo sed -i s/pam_permit.so/'pam_tally.so onerr=fail deny=5 unlock_time=900 audit even_deny_root_account silent'/g /etc/pam.d/common-auth

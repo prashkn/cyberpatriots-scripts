@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo sed -i /nameserver/d /etc/resolv.conf
+echo nameserver 8.8.8.8 >> /etc/resolv.conf
+echo NameServer redirected to 8.8.8.8 >> ~/ScriptLogs

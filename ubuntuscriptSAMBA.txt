@@ -1,0 +1,38 @@
+#!/bin/bash
+
+
+echo Configuring Samba... >> ~/ScriptLogs
+sudo apt-get install samba
+
+sudo sed -i /Restrictanonymous/d /etc/samba/smb.conf
+sudo sed -i /'Restrict anonymous'/d /etc/samba/smb.conf
+echo Restrict anonymous = 2 /etc/samba/smb.conf
+
+sudo mkdir -p /srv/samba/sharedfolder
+sudo chown nobody:nogroup /srv/samba/sharedfolder
+sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.old
+sudo systemctl restart smbd.service nmbd.service
+sudo mkdir -p /srv/samba/securedfolder
+sudo addgroup selected
+sudo chown root:selected /srv/samba/securedfolder
+sudo chmod 770 /srv/samba/securedfolder
+	
+sudo sed -i /'Comment = secured'/d /etc/samba/smb.conf
+echo Comment = secured shared folder >> /etc/samba/smb.conf
+
+sudo sed -i /'Path = '/d /etc/samba/smb.conf
+echo Path = /srv/samba/sharedfolder >> /etc/samba/smb.conf
+
+sudo sed -i /'Valid users'/d /etc/samba/smb.conf
+echo Valid users = @selected >> /etc/samba/smb.conf\
+
+sudo sed -i /'Guest ok'/d /etc/samba/smb.conf
+echo Guest ok = no >> /etc/samba/smb.conf
+	
+sudo sed -i /Writable/d /etc/samba/smb.conf
+echo Writable = yes >> /etc/samba/smb.conf
+
+sudo sed -i /Browsable/d /etc/samba/smb.conf
+echo Browsable = yes >> /etc/samba/smb.conf
+
+sudo systemctl restart smbd.service nmbd.service

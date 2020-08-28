@@ -1,0 +1,22 @@
+#!/bin/bash
+
+sudo chmod ugo+wrx /etc/login.defs
+echo Changed Permissions in /etc/login.defs >> ~/ScriptLogs
+
+sudo sed -i /PASS_MAX_DAYS/d /etc/login.defs
+echo Deleted PASS_MAX_DAYS line in /etc/login.defs >> ~/ScriptLogs
+
+sudo sed -i /PASS_MIN_DAYS/d /etc/login.defs
+echo Deleted PASS_MIN_DAYS line in /etc/login.defs >> ~/ScriptLogs
+
+sudo sed -i /PASS_WARN_AGE/d /etc/login.defs
+echo Deleted PASS_WARN_AGE line in /etc/login.defs >> ~/ScriptLogs
+
+echo PASS_MAX_DAYS 30 >> /etc/login.defs
+echo Added PASS_MAX_DAYS line in /etc/login.defs >> ~/ScriptLogs
+
+echo PASS_MIN_DAYS 3 >> /etc/login.defs
+echo Added PASS_MIN_DAYS line in /etc/login.defs >> ~/ScriptLogs
+
+echo PASS_WARN_AGE 7 >> /etc/login.defs
+echo Added PASS_WARN_AGE line in /etc/login.defs >> ~/ScriptLogs

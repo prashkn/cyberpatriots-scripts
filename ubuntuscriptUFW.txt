@@ -1,0 +1,21 @@
+#!/bin/bash
+
+sudo ufw enable
+sudo ufw logging on
+sudo ufw logging high
+echo UFW logging enabled on high >> ~/ScriptLogs
+echo UFW Enabled >> ~/ScriptLogs
+
+sudo passwd -l root
+sudo apt-get install sed
+
+sudo ufw deny 23
+sudo ufw deny 2049
+sudo ufw deny 515
+sudo ufw deny 111
+
+sed -i /icmp/d /etc/ufw/before.rules
+echo Deleted ICMP lines in /etc/ufw/before.rules >> ~/ScriptLogs
+
+sed -i /icmp/d /etc/ufw/before6.rules
+echo Deleted ICMP lines in /etc/ufw/before6.rules >> ~/ScriptLogs

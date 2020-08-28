@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo Configuring FTP... >> ~/ScriptLogs
+sudo sed -i /anonymous_enable/d /etc/vsftpd.conf
+echo anonymous_enable=ON >> /etc/vsftpd.conf
+
+sudo sed -i /local_enable/d /etc/vsftpd.conf
+echo local_enable=YES >> /etc/vsftpd.conf
+
+sudo sed -i /write_enable/d /etc/vsftpd.conf
+echo write_enable=YES >> /etc/vsftpd.conf
+
+sudo sed -i /chroot_local_user/d /etc/vsftpd.conf
+echo chroot_local_user=YES >> /etc/vsftpd.conf
+
+sudo sed -i /anon_upload_enable/d /etc/vsftpd.conf
+echo anon_upload_enable=no >> /etc/vsftpd.conf
+
+echo Restarting vsftpd... >> ~/ScriptLogs
+sudo service vsftpd restart

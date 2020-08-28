@@ -1,0 +1,37 @@
+#!/bin/bash
+
+echo Configuring PHP... >> ~/ScriptLogs
+sudo apt-get install php
+
+sudo sed -i /Expose_php/d /etc/php5/apache2/php.ini
+echo Expose_php = off /etc/php5/apache2/php.ini
+
+sudo sed -i /allow_url_fopen/d /etc/php5/apache2/php.ini
+echo allow_url_fopen=off /etc/php5/apache2/php.ini
+
+sudo sed -i /allow_url_include/d /etc/php5/apache2/php.ini
+echo allow_url_include=off /etc/php5/apache2/php.ini
+
+sudo sed -i /disable_function/d /etc/php5/apache2/php.ini
+echo disable_function=exec /etc/php5/apache2/php.ini
+
+sudo sed -i /upload_max_filesize/d /etc/php5/apache2/php.ini
+echo upload_max_filesize = 2M /etc/php5/apache2/php.ini
+
+sudo sed -i /max_execution_time/d /etc/php5/apache2/php.ini
+echo max_execution_time = 30 /etc/php5/apache2/php.ini
+
+sudo sed -i /max_input_time/d /etc/php5/apache2/php.ini
+echo max_input_time=60 /etc/php5/apache2/php.ini
+
+sudo sed -i /display_errors/d /etc/php5/apache2/php.ini
+echo display_errors=off /etc/php.d/security.ini
+
+sudo sed -i /log_errors/d /etc/php5/apache2/php.ini
+echo log_errors=on /etc/php.d/security.ini
+
+sudo sed -i /error_log/d /etc/php5/apache2/php.ini
+echo error_log=/var/log/httpd/php_scripts_error.log /etc/php.d/security.ini
+
+sudo sed -i /file_uploads/d /etc/php5/apache2/php.ini
+echo file_uploads=off /etc/php.d/security.ini

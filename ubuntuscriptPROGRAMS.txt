@@ -1,0 +1,25 @@
+#!/bin/bash
+
+> ~/ScriptLogs
+
+sudo apt-get install clamtk | grep clamtk >> ~/ScriptLogs
+sudo freshclam | grep ERROR >> ~/ScriptLogs
+sudo apt-get install libpam-cracklib --force-yes -y | grep libpam-cracklib >> ~/ScriptLogs
+sudo apt-get install perl --force-y -y | grep perl >> ~/ScriptLogs
+sudo apt-get purge john -y | grep john >> ~/ScriptLogs
+sudo apt-get purge cheese -y | grep cheese >> ~/ScriptLogs
+sudo apt-get purge hydra -y | grep hydra >> ~/ScriptLogs
+sudo apt-get purge nginx -y | grep nginx >> ~/ScriptLogs
+sudo apt-get purge bind9 -y | grep bind9 >> ~/ScriptLogs
+sudo apt-get purge x11vnc -y | grep x11vnc >> ~/ScriptLogs
+sudo apt-get purge tightvncserver -y | grep tightvncserver >> ~/ScriptLogs
+sudo apt-get purge snmp -y | grep snmp >> ~/ScriptLogs
+sudo apt-get purge nfs -y | grep nfs >> ~/ScriptLogs
+sudo apt-get purge sendmail -y | grep sendmail >> ~/ScriptLogs
+sudo apt-get purge postfix -y | grep postfix >> ~/ScriptLogs
+sudo apt-get purge xinetd -y | grep xinetd >> ~/ScriptLogs
+sudo apt-get purge telnet -y | grep telnet >> ~/ScriptLogs
+sudo apt-get purge pop3 -y | grep pop3 >> ~/ScriptLogs
+sudo apt-get purge icmp -y | grep icmp >> ~/ScriptLogs
+sudo apt-get purge dovecot -y | grep dovecot >> ~/ScriptLogs
+sudo apt-get purge nc -y | grep nc >> ~/ScriptLogs

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+sudo chmod ugo+wrx /usr/share/lightdm/lightdm.conf.d/50-disable-guest.conf
+echo Changed Permission for /usr/share/lightdm/lightdm.conf.d/50-disable-guest.conf >> ~/ScriptLogs
+
+sudo sed -i /allow-guest/d /usr/share/lightdm/lightdm.conf.d/50-disable-guest.conf
+echo allow-guest=false >> /usr/share/lightdm/lightdm.conf.d/50-disable-guest.conf
+echo Guest is not allowed >> ~/ScriptLogs

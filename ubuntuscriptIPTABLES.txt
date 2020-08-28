@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#telnet
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 23 -j DROP
+
+#nfs
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 2049 -j DROP
+
+#nfs
+sudo iptables -A INPUT -p udp -s 0/0 -d 0/0 --dport 2049 -j DROP
+
+#x-windows
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 6000:6009 -j DROP
+
+#x-windows font
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 7100 -j DROP
+
+#printer
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 515 -j DROP
+
+#printer udp
+sudo iptables -A INPUT -p udp -s 0/0 -d 0/0 --dport 515 -j DROP
+
+#sun rpc
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 111 -j DROP
+
+#sun rpc
+sudo iptables -A INPUT -p udp -s 0/0 -d 0/0 --dport 111 -j DROP

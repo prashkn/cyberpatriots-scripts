@@ -1,0 +1,624 @@
+#!/bin/bash
+
+> ~/ScriptLogs
+
+
+echo damn yall really did steal this huh
+	
+sudo ufw enable
+sudo ufw logging on
+sudo ufw logging high
+echo UFW logging enabled on high >> ~/ScriptLogs
+echo UFW Enabled >> ~/ScriptLogs
+
+sudo passwd -l root
+sudo apt-get install sed
+
+sudo ufw status | grep Status >> ~/ScriptLogs
+sudo apt-get install clamtk | grep clamtk >> ~/ScriptLogs
+sudo freshclam | grep ERROR >> ~/ScriptLogs
+sudo apt-get install libpam-cracklib --force-yes -y | grep libpam-cracklib >> ~/ScriptLogs
+sudo apt-get install perl --force-y -y | grep perl >> ~/ScriptLogs
+sudo apt-get purge john -y | grep john >> ~/ScriptLogs
+sudo apt-get purge cheese -y | grep cheese >> ~/ScriptLogs
+sudo apt-get purge hydra -y | grep hydra >> ~/ScriptLogs
+sudo apt-get purge nginx -y | grep nginx >> ~/ScriptLogs
+sudo apt-get purge bind9 -y | grep bind9 >> ~/ScriptLogs
+sudo apt-get purge x11vnc -y | grep x11vnc >> ~/ScriptLogs
+sudo apt-get purge tightvncserver -y | grep tightvncserver >> ~/ScriptLogs
+sudo apt-get purge snmp -y | grep snmp >> ~/ScriptLogs
+sudo apt-get purge nfs -y | grep nfs >> ~/ScriptLogs
+sudo apt-get purge sendmail -y | grep sendmail >> ~/ScriptLogs
+sudo apt-get purge postfix -y | grep postfix >> ~/ScriptLogs
+sudo apt-get purge xinetd -y | grep xinetd >> ~/ScriptLogs
+sudo apt-get purge telnet -y | grep telnet >> ~/ScriptLogs
+sudo apt-get purge pop3 -y | grep pop3 >> ~/ScriptLogs
+sudo apt-get purge icmp -y | grep icmp >> ~/ScriptLogs
+sudo apt-get purge dovecot -y | grep dovecot >> ~/ScriptLogs
+sudo apt-get purge nc -y | grep nc >> ~/ScriptLogs
+
+sudo ufw deny 23
+sudo ufw deny 2049
+sudo ufw deny 515
+sudo ufw deny 111
+
+
+read -p "Install htop?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Installing htop... >> ~/ScriptLogs
+	sudo apt-get install htop
+fi
+
+read -p "Install Bastille?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Installing Bastille... >> ~/ScriptLogs
+	sudo apt-get install bastille
+fi
+
+read -p "Install openssh-server?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Installing openssh-server... >> ~/ScriptLogs
+	sudo apt-get install openssh-server
+fi
+
+read -p "PURGE samba?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Installing openssh-server... >> ~/ScriptLogs
+	sudo apt-get purge samba
+fi
+
+
+echo ------------------------------------------- >> ~/ScriptLogs
+
+sudo apt-get install auditd
+sudo auditctl -e 1
+
+
+echo ------------------------------------------- >> ~/ScriptLogs
+
+sudo chmod ugo+wrx /etc/ssh/sshd_config
+echo Changed Permissions for /etc/ssh/sshd_config >> ~/ScriptLogs
+
+sudo sed -i s/'PasswordAuthentication .*'/'PasswordAuthentication yes'/g /etc/ssh/sshd_config
+
+sudo sed -i /UsePrivilegeSeparation/d /etc/ssh/sshd_config
+echo PrivilegeSeparation yes >> /etc/ssh/sshd_config
+echo UsePrivilegeSeperation yes in /etc/ssh/sshd_config >> ~/ScriptLogs
+
+sudo sed -i /PermitRootLogin/d /etc/ssh/sshd_config
+echo PermitRootLogin no >> /etc/ssh/sshd_config
+echo PermitRootLogin no in /etc/ssh/sshd_config >> ~/ScriptLogs
+
+sudo sed -i /X11Forwarding/d /etc/ssh/sshd_config
+echo X11Forwarding no >> /etc/ssh/sshd_config
+echo X11Forwarding no in /etc/ssh/sshd_config >> ~/ScriptLogs
+
+sudo sed -i /PermitEmptyPassword/d /etc/ssh/sshd_config
+echo PermitEmptyPassword no >> /etc/ssh/sshd_config
+echo PermitEmptyPassword no in /etc/ssh/sshd_config >> ~/ScriptLogs
+
+sudo sed -i /LoginGraceTime/d /etc/ssh/sshd_config
+echo LoginGraceTime 60 >> /etc/ssh/sshd_config
+echo LoginGraceTime is 60 in /etc/ssh/sshd_config >> ~/ScriptLogs
+
+sudo sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config
+
+sudo sed -i /UsePAM/d /etc/ssh/sshd_config
+echo UsePAM yes >> /etc/ssh/sshd_config
+
+
+#--------------------------------------------------------------------------
+
+sudo chmod ugo+wrx /etc/apt/apt.conf.d/10periodic
+
+sudo sed -i /Update-Package-Lists/d /etc/apt/apt.conf.d/10periodic
+echo APT::Periodic::Update-Package-Lists \"1\"; >> /etc/apt/apt.conf.d/10periodic
+
+sudo sed -i /Download-Upgradeable-Packages/d /etc/apt/apt.conf.d/10periodic
+echo APT::Periodic::Download-Upgradeable-Packages \"1\"; >> /etc/apt/apt.conf.d/10periodic
+
+sudo sed -i /AutocleanInterval/d /etc/apt/apt.conf.d/10periodic
+echo APT::Periodic::AutocleanInterval \"0\"; >> /etc/apt/apt.conf.d/10periodic
+
+sudo sed -i /Unattended-Upgrade/d /etc/apt/apt.conf.d/10periodic
+echo APT::Periodic::Unattended-Upgrade \"1\"; >> /etc/apt/apt.conf.d/10periodic
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sudo chmod ugo+wrx /usr/share/lightdm/lightdm.conf.d/50-disable-guest.conf
+echo Changed Permission for /usr/share/lightdm/lightdm.conf.d/50-disable-guest.conf >> ~/ScriptLogs
+
+sudo sed -i /allow-guest/d /usr/share/lightdm/lightdm.conf.d/50-disable-guest.conf
+echo allow-guest=false >> /usr/share/lightdm/lightdm.conf.d/50-disable-guest.conf
+echo Guest is not allowed >> ~/ScriptLogs
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sudo chmod ugo+wrx /etc/pam.d/common-password
+echo Changed Permissions for /etc/pam.d/common-password >> ~/ScriptLogs
+
+sudo sed -i s/pam.unix.so/'pam.unix.so minlen=10 remember=5'/g /etc/pam.d/common-password
+echo Minimum length = 10 remember = 5 in /etc/pam.d/common-password >> ~/ScriptLogs
+
+sudo sed -i s/pam.cracklib.so/'pam.cracklib.so ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1'/g /etc/pam.d/common-password
+echo ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1 in /etc/pam.d/common-password >> ~/ScriptLogs
+
+sudo sed -i /pam_pwhistory.so/d /etc/pam.d/common-password
+echo password requisite pam_pwhistory.so use_authok remember=24 enforce_for_root >> /etc/pam.d/common-password
+echo pam_pwhistory.so in /etc/pam.d/common-password >> ~/ScriptLogs
+
+sudo sed -i /pam_cracklib/d /etc/pam.d/common-password
+sudo perl -pi -e 's/.*pam_cracklib.so.*/password requisite pam_cracklib.so retry=3 minlen=8 difok=3 reject_username minclass=3 maxrepeat=2 dcredit=1 ucredit=1 lcredit=1 ocredit=1/g' /etc/pam.d/common-password
+
+echo password [success=1 default=ignore] pam_unix.so obscure use_authok sha512 shadow >> /etc/pam.d/common-password
+
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sudo chmod ugo+wrx /etc/login.defs
+echo Changed Permissions in /etc/login.defs >> ~/ScriptLogs
+
+sudo sed -i /PASS_MAX_DAYS/d /etc/login.defs
+echo Deleted PASS_MAX_DAYS line in /etc/login.defs >> ~/ScriptLogs
+
+sudo sed -i /PASS_MIN_DAYS/d /etc/login.defs
+echo Deleted PASS_MIN_DAYS line in /etc/login.defs >> ~/ScriptLogs
+
+sudo sed -i /PASS_WARN_AGE/d /etc/login.defs
+echo Deleted PASS_WARN_AGE line in /etc/login.defs >> ~/ScriptLogs
+
+echo PASS_MAX_DAYS 30 >> /etc/login.defs
+echo Added PASS_MAX_DAYS line in /etc/login.defs >> ~/ScriptLogs
+
+echo PASS_MIN_DAYS 3 >> /etc/login.defs
+echo Added PASS_MIN_DAYS line in /etc/login.defs >> ~/ScriptLogs
+
+echo PASS_WARN_AGE 7 >> /etc/login.defs
+echo Added PASS_WARN_AGE line in /etc/login.defs >> ~/ScriptLogs
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sudo chmod ugo+wrx /etc/apt/apt.conf.d/50unattended-upgrades
+echo Changed Permissions in /etc/apt/apt.conf.d/50unattended-upgrades >> ~/ScriptLogs
+
+sudo sed -i /{distro_codename}-updates/d /etc/apt/apt.conf.d/50unattended-upgrades
+echo Deleted updates line in /etc/apt/apt.conf.d/50unattended-upgrades >> ~/ScriptLogs
+
+sudo sed -i '14\"${distro_id}:${distro_codename}-updates\";' /etc/apt/apt.conf.d/50unattended-upgrades
+echo Added updates line in /etc/apt/conf.d/50unattended-upgrades >> ~/ScriptLogs
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sudo find / -type f -name "*.mp3" | grep mp3 > ~/mymp3files | grep mp3 >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mymp3files
+#sudo chmod ugo+wrx ~/mymp3files
+#~/mymp3files
+
+sudo find / -type f -name "*.ogg" | grep mp3 > ~/myoggfiles | grep ogg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myoggfiles
+#sudo chmod ugo+wrx ~/myoggfiles
+#~/myoggfiles
+
+sudo find / -type f -name "*.mp4" | grep mp4 > ~/mymp4files | grep mp4 >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mymp4files
+#sudo chmod ugo+wrx ~/mymp4files
+#~/mymp4files
+
+sudo find / -type f -name "*.mov" | grep mov > ~/mymovfiles | grep mov >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mymovfiles
+#sudo chmod ugo+wrx ~/mymovfiles
+#~/mymovfiles
+
+sudo find / -type f -name "*.avi" | grep avi > ~/myavifiles | grep avi >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myavifiles
+#sudo chmod ugo+wrx ~/myavifiles
+#~/myavifiles
+
+sudo find / -type f -name "*.mpg" | grep mpg > ~/mympgfiles | grep mpg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mympgfiles
+#sudo chmod ugo+wrx ~/mympgfiles
+#~/mympgfiles
+
+sudo find / -type f -name "*.mpeg" | grep mpeg > ~/mympegfiles | grep mpeg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mympegfiles
+#sudo chmod ugo+wrx ~/mympegfiles
+#~/mympegfiles
+
+sudo find / -type f -name "*.flac" | grep flac > ~/myflacfiles | grep flac >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myflacfiles
+#sudo chmod ugo+wrx ~/myflacfiles
+#~/myflacfiles
+
+sudo find / -type f -name "*.m4a" | grep m4a > ~/mym4afiles | grep m4a >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mym4afiles
+#sudo chmod ugo+wrx ~/mym4afiles
+#~/mym4afiles
+
+sudo find / -type f -name "*.flv" | grep flv > ~/myflvfiles | grep flv >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myflvfiles
+#sudo chmod ugo+wrx ~/myflvfiles
+#~/myflvfiles
+
+sudo find / -type f -name "*.gif" | grep gif > ~/mygiffiles | grep gif >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mygiffiles
+#sudo chmod ugo+wrx ~/mygiffiles
+#~/mygiffiles
+
+sudo find / -type f -name "*.png" | grep png > ~/mypngfiles | grep png >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/mypngfiles
+#sudo chmod ugo+wrx ~/mypngfiles
+#~/mypngfiles
+
+sudo find / -type f -name "*.jpg" | grep jpg > ~/myjpgfiles | grep jpg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myjpgfiles
+#sudo chmod ugo+wrx ~/myjpgfiles
+#~/myjpgfiles
+
+sudo find / -type f -name "*.jpeg" | grep jpeg > ~/myjpegfiles | grep jpeg >> ~/ScriptLogs
+#sudo sed -i 's/^/rm /' ~/myjpegfiles
+#sudo chmod ugo+wrx ~/myjpegfiles
+#~/myjpegfiles
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sudo apt list --installed | grep cheese > ~/mysuspackages
+#do more here
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sed -i /icmp/d /etc/ufw/before.rules
+echo Deleted ICMP lines in /etc/ufw/before.rules >> ~/ScriptLogs
+
+sed -i /icmp/d /etc/ufw/before6.rules
+echo Deleted ICMP lines in /etc/ufw/before6.rules >> ~/ScriptLogs
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+read -p "Update Firefox?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	sudo apt-get install firefox
+	sudo apt-get upgrade firefox
+	echo Commanded to upgrade Firefox >> ~/ScriptLogs
+fi
+
+read -p "Update Ubuntu Software Center?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	sudo apt-get install software-center
+	sudo apt-get upgrade software-center
+	echo Commanded to upgrade Ubuntu Software Center >> ~/ScriptLogs
+fi
+
+
+#--------------------------------------------------------------------------
+
+sudo apt-get autoremove --purge john netcat nmap hydra aircrack-ng
+
+
+#--------------------------------------------------------------------------
+
+sudo chmod ugo+wrx /etc/sudoers
+sudo sed -i s/NOPASSWD:// /etc/sudoers
+
+
+#--------------------------------------------------------------------------
+#. pwd = present working directory
+#~ home directory = ex: /home/prashantn/
+
+read -p "Is Apache a critical service?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Configuring Apache... >> ~/ScriptLogs
+	sudo apt-get install apache2 --reinstall
+
+	sudo chmod ugo+wrx /etc/apache2/apache2.conf
+	echo Changed Permissions for /etc/apache2/apache2.conf >> ~/ScriptLogs
+
+	sudo sed -i /ServerSignature/d /etc/apache2/apache2.conf
+	echo ServerSignature Off >> /etc/apache2/apache2.conf
+
+	sudo sed -i /ServerTokens/d /etc/apache2/apache2.conf
+	echo ServerTokens Prod >> /etc/apache2/apache2.conf
+
+	sudo sed -i /'User '/d /etc/apache2/apache2.conf
+	echo User createdtempapache >> /etc/apache2/apache2.conf
+
+	sudo sed -i /'Group '/d /etc/apache2/apache2.conf
+	echo Group apache >> /etc/apache2/apache2.conf
+
+	sudo sed -i s/'Timeout .*'/'Timeout 15'/g /etc/apache2/apache2.conf
+
+	sudo sed -i /AllowOverride/d /etc/apache2/apache2.conf
+	echo AllowOverride None >> /etc/apache2/apache2.conf
+
+	sudo sed -i /'Order '/d /etc/apache2/apache2.conf
+	echo Order deny,allow >> /etc/apache2/apache2.conf
+
+	sudo sed -i /'Deny from all'/d /etc/apache2/apache2.conf
+	echo Deny from all >> /etc/apache2/apache2.conf
+
+	sudo sed -i s/'KeepAlive .*'/'KeepAlive Off'/g /etc/apache2/apache2.conf
+
+	sudo sed -i /'HostnameLookups '/d /etc/apache2/apache2.conf
+	echo HostnameLookups On >> /etc/apache2/apache2.conf
+
+	sudo sed -i s/'Require all .*'/'Require all granted'/g /etc/apache2/apache2.conf
+
+	sudo sed -i /Autocomplete/d /etc/apache2/apache2.conf
+	echo AutoComplete disable >> /etc/apache2/apache2.conf
+
+	sudo sed -i /'Options -FollowSymLinks/d /etc/apache2/apache2.conf
+	echo Options -FollowSymLinks -Includes -ExecCGI >> /etc/apache2/apache2.conf
+
+	sudo sed -i /LimitRequestBody/d /etc/apache2/apache2.conf
+	echo LimitRequestBody 204800 >> /etc/apache2/apache2.conf
+
+	#modsecurity stuff
+fi
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sudo sed -i /nameserver/d /etc/resolv.conf
+echo nameserver 8.8.8.8 >> /etc/resolv.conf
+echo NameServer redirected to 8.8.8.8 >> ~/ScriptLogs
+
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+read -p "Is MYSQL a critical service?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Configuring MySQL... >> ~/ScriptLogs
+	sudo apt-get install mysql-server
+
+	sudo mysql-secure-installation
+
+	sudo ufw allow mysql
+
+	#Everything else
+fi
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+read -p "Is PHP a critical service?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Configuring PHP... >> ~/ScriptLogs
+	sudo apt-get install php
+
+	sudo sed -i /Expose_php/d /etc/php5/apache2/php.ini
+	echo Expose_php = off /etc/php5/apache2/php.ini
+
+	sudo sed -i /allow_url_fopen/d /etc/php5/apache2/php.ini
+	echo allow_url_fopen=off /etc/php5/apache2/php.ini
+
+	sudo sed -i /allow_url_include/d /etc/php5/apache2/php.ini
+	echo allow_url_include=off /etc/php5/apache2/php.ini
+
+	sudo sed -i /disable_function/d /etc/php5/apache2/php.ini
+	echo disable_function=exec /etc/php5/apache2/php.ini
+
+	sudo sed -i /upload_max_filesize/d /etc/php5/apache2/php.ini
+	echo upload_max_filesize = 2M /etc/php5/apache2/php.ini
+
+	sudo sed -i /max_execution_time/d /etc/php5/apache2/php.ini
+	echo max_execution_time = 30 /etc/php5/apache2/php.ini
+
+	sudo sed -i /max_input_time/d /etc/php5/apache2/php.ini
+	echo max_input_time=60 /etc/php5/apache2/php.ini
+
+	sudo sed -i /display_errors/d /etc/php5/apache2/php.ini
+	echo display_errors=off /etc/php.d/security.ini
+
+	sudo sed -i /log_errors/d /etc/php5/apache2/php.ini
+	echo log_errors=on /etc/php.d/security.ini
+
+	sudo sed -i /error_log/d /etc/php5/apache2/php.ini
+	echo error_log=/var/log/httpd/php_scripts_error.log /etc/php.d/security.ini
+
+	sudo sed -i /file_uploads/d /etc/php5/apache2/php.ini
+	echo file_uploads=off /etc/php.d/security.ini
+fi
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+read -p "Is Samba a critical service?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Configuring Samba... >> ~/ScriptLogs
+	sudo apt-get install samba
+
+	sudo sed -i /Restrictanonymous/d /etc/samba/smb.conf
+	sudo sed -i /'Restrict anonymous'/d /etc/samba/smb.conf
+	echo Restrict anonymous = 2 /etc/samba/smb.conf
+
+	sudo mkdir -p /srv/samba/sharedfolder
+	sudo chown nobody:nogroup /srv/samba/sharedfolder
+	sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.old
+	sudo systemctl restart smbd.service nmbd.service
+	sudo mkdir -p /srv/samba/securedfolder
+	sudo addgroup selected
+	sudo chown root:selected /srv/samba/securedfolder
+	sudo chmod 770 /srv/samba/securedfolder
+	
+	sudo sed -i /'Comment = secured'/d /etc/samba/smb.conf
+	echo Comment = secured shared folder >> /etc/samba/smb.conf
+
+	sudo sed -i /'Path = '/d /etc/samba/smb.conf
+	echo Path = /srv/samba/sharedfolder >> /etc/samba/smb.conf
+
+	sudo sed -i /'Valid users'/d /etc/samba/smb.conf
+	echo Valid users = @selected >> /etc/samba/smb.conf\
+
+	sudo sed -i /'Guest ok'/d /etc/samba/smb.conf
+	echo Guest ok = no >> /etc/samba/smb.conf
+	
+	sudo sed -i /Writable/d /etc/samba/smb.conf
+	echo Writable = yes >> /etc/samba/smb.conf
+
+	sudo sed -i /Browsable/d /etc/samba/smb.conf
+	echo Browsable = yes >> /etc/samba/smb.conf
+
+	sudo systemctl restart smbd.service nmbd.service	
+fi
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+read -p "Is FTP a critical service?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Configuring FTP... >> ~/ScriptLogs
+	
+	sudo sed -i /anonymous_enable/d /etc/vsftpd.conf
+	echo anonymous_enable=ON >> /etc/vsftpd.conf
+
+	sudo sed -i /local_enable/d /etc/vsftpd.conf
+	echo local_enable=YES >> /etc/vsftpd.conf
+
+	sudo sed -i /write_enable/d /etc/vsftpd.conf
+	echo write_enable=YES >> /etc/vsftpd.conf
+
+	sudo sed -i /chroot_local_user/d /etc/vsftpd.conf
+	echo chroot_local_user=YES >> /etc/vsftpd.conf
+
+	sudo sed -i /anon_upload_enable/d /etc/vsftpd.conf
+	echo anon_upload_enable=no >> /etc/vsftpd.conf
+
+	read -p "Restart VSFTPD?" -n 1 -r
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		echo Restarting vsftpd... >> ~/ScriptLogs
+		sudo service vsftpd restart
+	fi
+
+fi
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+read -p "Is PAM a critical service?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Configuring PAM... >> ~/ScriptLogs
+	sudo sed -i s/'auth required pam_listfile.so'/'auth required pam_listfile.so onerr=succeed item=user sense=deny file=/etc/ssh/deniedusers'/g /etc/pam.d/sshd
+
+	sudo chmod 600 /etc/ssh/deniedusers
+
+	#everything else
+fi
+
+sudo sed -i s/\/bing\/bash/\/sbin\/nologin/g /etc/passwd
+sudo chmod -R 444 /var/log
+sudo chmod 440 /etc/passwd
+sudo chmod 440 /etc/shadow
+sudo chmod 440 /etc/group
+sudo chmod 04750 /bin/su
+sudo chmod 444 /var/www
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+sudo sed -i s/pam_permit.so/'pam_tally.so onerr=fail deny=5 unlock_time=900 audit even_deny_root_account silent'/g /etc/pam.d/common-auth
+
+
+#--------------------------------------------------------------------------
+
+#telnet
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 23 -j DROP
+
+#nfs
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 2049 -j DROP
+
+#nfs
+sudo iptables -A INPUT -p udp -s 0/0 -d 0/0 --dport 2049 -j DROP
+
+#x-windows
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 6000:6009 -j DROP
+
+#x-windows font
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 7100 -j DROP
+
+#printer
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 515 -j DROP
+
+#printer udp
+sudo iptables -A INPUT -p udp -s 0/0 -d 0/0 --dport 515 -j DROP
+
+#sun rpc
+sudo iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 111 -j DROP
+
+#sun rpc
+sudo iptables -A INPUT -p udp -s 0/0 -d 0/0 --dport 111 -j DROP
+
+
+#--------------------------------------------------------------------------
+
+sudo chmod ugo+wrx /etc/apache2/ports.conf
+sudo sed -i '5d' /etc/apache2/ports.conf
+echo Listen 0.0.0.0:80 >> /etc/apache2/ports.conf
+sudo sed -i '15,17d' /etc/apache2/ports.conf
+echo \<IfModule mod_ssl.c\> >> /etc/apache2/ports.conf
+echo Listen 0.0.0.0:443 >> /etc/apache2/ports.conf
+echo \</IfModule\> >> /etc/apache2/ports.conf
+
+
+echo --------------------------------------------- >> ~/ScriptLogs
+
+read -p "Ready for updates?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	echo Updating... >> ~/ScriptLogs
+	sudo apt-get update
+	sudo apt-get -V -y install firefox hard info chkrootkit iptables portsentry lynis ufw gufw sysv-rc-conf nessus clamav
+	sudo apt-get -V -y install --reinstall coreutils
+	sudo apt-get upgrade
+	sudo apt-get autoclean
+	sudo apt-get autoremove
+	sudo apt-get dist-upgrade
+	sudo apt-get install --only-upgrade bash
+fi
+
+echo ---------------------------------------------- >> ~/ScriptLogs
+
+echo MEMBERS OF GROUP 'ADM' >> ~/ScriptLogs
+grep adm /etc/group >> ~/ScriptLogs | cut -d ':' -f 4
+
+echo MEMBERS OF GROUP 'ROOT' >> ~/ScriptLogs
+grep root /etc/group >> ~/ScriptLogs | cut -d ':' -f 4
+
+echo MEMBERS OF GROUP 'SUDO' >> ~/ScriptLogs
+grep sudo /etc/group >> ~/ScriptLogs | cut -d ':' -f 4
+
+sudo apt-get install synaptic
+
+echo Enable pop up blocker on firefox (pg 3), maybe change shadow?, cron job, disable some modules (pg4), mod security (pg 5), 
+
+
+
+
+
+
+#TO DO:
+#CRON
+#WHAT IS SYNAPTIC
+#ALLOW USERS SSH SSHDCONFIG
+#NET.IPV4.TCP STUFF
+#FTP, PAM, Samba?, PHP?, MYSQL, 

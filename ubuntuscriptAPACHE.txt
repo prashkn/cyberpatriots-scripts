@@ -1,0 +1,48 @@
+#!/bin/bash
+
+echo Configuring Apache... >> ~/ScriptLogs
+sudo apt-get install apache2 --reinstall
+
+sudo chmod ugo+wrx /etc/apache2/apache2.conf
+echo Changed Permissions for /etc/apache2/apache2.conf >> ~/ScriptLogs
+
+sudo sed -i /ServerSignature/d /etc/apache2/apache2.conf
+echo ServerSignature Off >> /etc/apache2/apache2.conf
+
+sudo sed -i /ServerTokens/d /etc/apache2/apache2.conf
+echo ServerTokens Prod >> /etc/apache2/apache2.conf
+
+sudo sed -i /'User '/d /etc/apache2/apache2.conf
+echo User createdtempapache >> /etc/apache2/apache2.conf
+
+sudo sed -i /'Group '/d /etc/apache2/apache2.conf
+echo Group apache >> /etc/apache2/apache2.conf
+
+sudo sed -i s/'Timeout .*'/'Timeout 15'/g /etc/apache2/apache2.conf
+
+sudo sed -i /AllowOverride/d /etc/apache2/apache2.conf
+echo AllowOverride None >> /etc/apache2/apache2.conf
+
+sudo sed -i /'Order '/d /etc/apache2/apache2.conf
+echo Order deny,allow >> /etc/apache2/apache2.conf
+
+sudo sed -i /'Deny from all'/d /etc/apache2/apache2.conf
+echo Deny from all >> /etc/apache2/apache2.conf
+
+sudo sed -i s/'KeepAlive .*'/'KeepAlive Off'/g /etc/apache2/apache2.conf
+
+sudo sed -i /'HostnameLookups '/d /etc/apache2/apache2.conf
+echo HostnameLookups On >> /etc/apache2/apache2.conf
+
+sudo sed -i s/'Require all .*'/'Require all granted'/g /etc/apache2/apache2.conf
+
+sudo sed -i /Autocomplete/d /etc/apache2/apache2.conf
+echo AutoComplete disable >> /etc/apache2/apache2.conf
+
+sudo sed -i /'Options -FollowSymLinks/d /etc/apache2/apache2.conf
+echo Options -FollowSymLinks -Includes -ExecCGI >> /etc/apache2/apache2.conf
+
+sudo sed -i /LimitRequestBody/d /etc/apache2/apache2.conf
+echo LimitRequestBody 204800 >> /etc/apache2/apache2.conf
+echo DO MODSECURITY STUFF
+#modsecurity stuff

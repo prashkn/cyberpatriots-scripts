@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+sudo apt-get install firefox
+sudo apt-get upgrade firefox
+echo Commanded to upgrade Firefox >> ~/ScriptLogs
+
+sudo apt-get install software-center
+sudo apt-get upgrade software-center
+echo Commanded to upgrade Ubuntu Software Center >> ~/ScriptLogs

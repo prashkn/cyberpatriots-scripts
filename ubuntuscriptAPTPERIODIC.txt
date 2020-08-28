@@ -1,0 +1,15 @@
+#!/bin/bash
+
+sudo chmod ugo+wrx /etc/apt/apt.conf.d/10periodic
+
+sudo sed -i /Update-Package-Lists/d /etc/apt/apt.conf.d/10periodic
+echo APT::Periodic::Update-Package-Lists \"1\"; >> /etc/apt/apt.conf.d/10periodic
+
+sudo sed -i /Download-Upgradeable-Packages/d /etc/apt/apt.conf.d/10periodic
+echo APT::Periodic::Download-Upgradeable-Packages \"1\"; >> /etc/apt/apt.conf.d/10periodic
+
+sudo sed -i /AutocleanInterval/d /etc/apt/apt.conf.d/10periodic
+echo APT::Periodic::AutocleanInterval \"0\"; >> /etc/apt/apt.conf.d/10periodic
+
+sudo sed -i /Unattended-Upgrade/d /etc/apt/apt.conf.d/10periodic
+echo APT::Periodic::Unattended-Upgrade \"1\"; >> /etc/apt/apt.conf.d/10periodic
