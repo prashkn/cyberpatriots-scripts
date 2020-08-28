@@ -1,2 +1,2 @@
 # cyberpatriots-scripts
-super old cyberpatriot scripts
+super old cyberpatriot scripts. **pls dont steal.**
