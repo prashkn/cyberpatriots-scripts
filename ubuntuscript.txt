@@ -1,9 +1,6 @@
 #!/bin/bash
 
 > ~/ScriptLogs
-
-
-echo damn yall really did steal this huh
 	
 sudo ufw enable
 sudo ufw logging on
